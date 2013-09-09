@@ -1,0 +1,4 @@
+foosure
+=======
+
+Foosball season manager

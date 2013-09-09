@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="027f4f226e8041138ed1053f4fff2f8b" Name="Diagram1" >
+        <EntityTypeShape EntityType="BusinessObjects.User" Width="1.5" PointX="3.5" PointY="2" />
+        <EntityTypeShape EntityType="BusinessObjects.Team" Width="1.5" PointX="8.25" PointY="2" />
+        <EntityTypeShape EntityType="BusinessObjects.Season" Width="1.5" PointX="3.5" PointY="7.125" />
+        <EntityTypeShape EntityType="BusinessObjects.GameNode" Width="1.5" PointX="8.25" PointY="7" />
+        <EntityTypeShape EntityType="BusinessObjects.GameNodeType" Width="1.5" PointX="13.375" PointY="6.875" />
+        <EntityTypeShape EntityType="BusinessObjects.GameNodeToGameNodeTypeMap" Width="1.625" PointX="10.75" PointY="6.875" />
+        <AssociationConnector Association="BusinessObjects.GameNodeGameNodeTypeMap" />
+        <AssociationConnector Association="BusinessObjects.GameNodeTypeGameNodeTypeMap" />
+        <EntityTypeShape EntityType="BusinessObjects.UserToTeamMap" Width="1.5" PointX="6" PointY="2" />
+        <EntityTypeShape EntityType="BusinessObjects.SeasonToGameNodeMap" Width="1.5" PointX="6.125" PointY="7" />
+        <AssociationConnector Association="BusinessObjects.GameNodeSeasonToGameNodeMap" />
+        <AssociationConnector Association="BusinessObjects.SeasonSeasonToGameNodeMap" />
+        <AssociationConnector Association="BusinessObjects.UserToTeamMapTeam" />
+        <AssociationConnector Association="BusinessObjects.UserUserToTeamMap" />
+        <EntityTypeShape EntityType="BusinessObjects.TeamToGameNodeMap" Width="1.5" PointX="8.375" PointY="4.375" />
+        <AssociationConnector Association="BusinessObjects.TeamTeamToGameNodeMap" />
+        <AssociationConnector Association="BusinessObjects.GameNodeTeamToGameNodeMap" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

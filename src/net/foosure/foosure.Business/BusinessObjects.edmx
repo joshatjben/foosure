@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="BusinessObjects.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="BusinessObjectsTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BusinessObjects" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="BusinessObjectsContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="BusinessObjects.User" />
+          <EntitySet Name="Teams" EntityType="BusinessObjects.Team" />
+          <EntitySet Name="Seasons" EntityType="BusinessObjects.Season" />
+          <EntitySet Name="GameNodes" EntityType="BusinessObjects.GameNode" />
+          <EntitySet Name="GameNodeTypes" EntityType="BusinessObjects.GameNodeType" />
+          <EntitySet Name="GameNodeToGameNodeTypeMaps" EntityType="BusinessObjects.GameNodeToGameNodeTypeMap" />
+          <AssociationSet Name="GameNodeGameNodeTypeMap" Association="BusinessObjects.GameNodeGameNodeTypeMap">
+            <End Role="GameNode" EntitySet="GameNodes" />
+            <End Role="GameNodeTypeMap" EntitySet="GameNodeToGameNodeTypeMaps" />
+          </AssociationSet>
+          <AssociationSet Name="GameNodeTypeGameNodeTypeMap" Association="BusinessObjects.GameNodeTypeGameNodeTypeMap">
+            <End Role="GameNodeType" EntitySet="GameNodeTypes" />
+            <End Role="GameNodeTypeMap" EntitySet="GameNodeToGameNodeTypeMaps" />
+          </AssociationSet>
+          <EntitySet Name="UserToTeamMaps" EntityType="BusinessObjects.UserToTeamMap" />
+          <EntitySet Name="SeasonToGameNodeMap" EntityType="BusinessObjects.SeasonToGameNodeMap" />
+          <AssociationSet Name="GameNodeSeasonToGameNodeMap" Association="BusinessObjects.GameNodeSeasonToGameNodeMap">
+            <End Role="GameNode" EntitySet="GameNodes" />
+            <End Role="SeasonToGameNodeMap" EntitySet="SeasonToGameNodeMap" />
+          </AssociationSet>
+          <AssociationSet Name="SeasonSeasonToGameNodeMap" Association="BusinessObjects.SeasonSeasonToGameNodeMap">
+            <End Role="Season" EntitySet="Seasons" />
+            <End Role="SeasonToGameNodeMap" EntitySet="SeasonToGameNodeMap" />
+          </AssociationSet>
+          <AssociationSet Name="UserToTeamMapTeam" Association="BusinessObjects.UserToTeamMapTeam">
+            <End Role="UserToTeamMap" EntitySet="UserToTeamMaps" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="UserUserToTeamMap" Association="BusinessObjects.UserUserToTeamMap">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserToTeamMap" EntitySet="UserToTeamMaps" />
+          </AssociationSet>
+          <EntitySet Name="TeamToGameNodeMaps" EntityType="BusinessObjects.TeamToGameNodeMap" />
+          <AssociationSet Name="TeamTeamToGameNodeMap" Association="BusinessObjects.TeamTeamToGameNodeMap">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamToGameNodeMap" EntitySet="TeamToGameNodeMaps" />
+          </AssociationSet>
+          <AssociationSet Name="GameNodeTeamToGameNodeMap" Association="BusinessObjects.GameNodeTeamToGameNodeMap">
+            <End Role="GameNode" EntitySet="GameNodes" />
+            <End Role="TeamToGameNodeMap" EntitySet="TeamToGameNodeMaps" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FirstName" Nullable="false" />
+          <Property Type="String" Name="LastName" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="UserToTeamMaps" Relationship="BusinessObjects.UserToTeamMapTeam" FromRole="Team" ToRole="UserToTeamMap" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="GameNode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameNodeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameNodeToGameNodeTypeMap" >
+          <Key>
+            <PropertyRef Name="GameNodeId" />
+            <PropertyRef Name="GameNodeTypeId" />
+          </Key>
+          <NavigationProperty Name="GameNode" Relationship="BusinessObjects.GameNodeGameNodeTypeMap" FromRole="GameNodeTypeMap" ToRole="GameNode" />
+          <Property Type="Int32" Name="GameNodeId" Nullable="false" />
+          <NavigationProperty Name="GameNodeType" Relationship="BusinessObjects.GameNodeTypeGameNodeTypeMap" FromRole="GameNodeTypeMap" ToRole="GameNodeType" />
+          <Property Type="Int32" Name="GameNodeTypeId" Nullable="false" />
+        </EntityType>
+        <Association Name="GameNodeGameNodeTypeMap">
+          <End Type="BusinessObjects.GameNode" Role="GameNode" Multiplicity="1" />
+          <End Type="BusinessObjects.GameNodeToGameNodeTypeMap" Role="GameNodeTypeMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameNode">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameNodeTypeMap">
+              <PropertyRef Name="GameNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GameNodeTypeGameNodeTypeMap">
+          <End Type="BusinessObjects.GameNodeType" Role="GameNodeType" Multiplicity="1" />
+          <End Type="BusinessObjects.GameNodeToGameNodeTypeMap" Role="GameNodeTypeMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameNodeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameNodeTypeMap">
+              <PropertyRef Name="GameNodeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserToTeamMap" >
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <NavigationProperty Name="Team" Relationship="BusinessObjects.UserToTeamMapTeam" FromRole="UserToTeamMap" ToRole="Team" />
+          <Property Type="Int32" Name="TeamId" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="BusinessObjects.UserUserToTeamMap" FromRole="UserToTeamMap" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SeasonToGameNodeMap" >
+          <Key>
+            <PropertyRef Name="GameNodeId" />
+            <PropertyRef Name="SeasonId" />
+          </Key>
+          <NavigationProperty Name="GameNode" Relationship="BusinessObjects.GameNodeSeasonToGameNodeMap" FromRole="SeasonToGameNodeMap" ToRole="GameNode" />
+          <Property Type="Int32" Name="GameNodeId" Nullable="false" />
+          <NavigationProperty Name="Season" Relationship="BusinessObjects.SeasonSeasonToGameNodeMap" FromRole="SeasonToGameNodeMap" ToRole="Season" />
+          <Property Type="Int32" Name="SeasonId" Nullable="false" />
+        </EntityType>
+        <Association Name="GameNodeSeasonToGameNodeMap">
+          <End Type="BusinessObjects.GameNode" Role="GameNode" Multiplicity="1" />
+          <End Type="BusinessObjects.SeasonToGameNodeMap" Role="SeasonToGameNodeMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameNode">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SeasonToGameNodeMap">
+              <PropertyRef Name="GameNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SeasonSeasonToGameNodeMap">
+          <End Type="BusinessObjects.Season" Role="Season" Multiplicity="1" />
+          <End Type="BusinessObjects.SeasonToGameNodeMap" Role="SeasonToGameNodeMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SeasonToGameNodeMap">
+              <PropertyRef Name="SeasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserToTeamMapTeam">
+          <End Type="BusinessObjects.UserToTeamMap" Role="UserToTeamMap" Multiplicity="*" />
+          <End Type="BusinessObjects.Team" Role="Team" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserToTeamMap">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserUserToTeamMap">
+          <End Type="BusinessObjects.User" Role="User" Multiplicity="1" />
+          <End Type="BusinessObjects.UserToTeamMap" Role="UserToTeamMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserToTeamMap">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeamToGameNodeMap" >
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="GameNodeId" />
+          </Key>
+          <NavigationProperty Name="Team" Relationship="BusinessObjects.TeamTeamToGameNodeMap" FromRole="TeamToGameNodeMap" ToRole="Team" />
+          <Property Type="Int32" Name="TeamId" Nullable="false" />
+          <NavigationProperty Name="GameNode" Relationship="BusinessObjects.GameNodeTeamToGameNodeMap" FromRole="TeamToGameNodeMap" ToRole="GameNode" />
+          <Property Type="Int32" Name="GameNodeId" Nullable="false" />
+        </EntityType>
+        <Association Name="TeamTeamToGameNodeMap">
+          <End Type="BusinessObjects.Team" Role="Team" Multiplicity="1" />
+          <End Type="BusinessObjects.TeamToGameNodeMap" Role="TeamToGameNodeMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamToGameNodeMap">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GameNodeTeamToGameNodeMap">
+          <End Type="BusinessObjects.GameNode" Role="GameNode" Multiplicity="1" />
+          <End Type="BusinessObjects.TeamToGameNodeMap" Role="TeamToGameNodeMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameNode">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamToGameNodeMap">
+              <PropertyRef Name="GameNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="BusinessObjects" />
+        <Alias Key="Target" Value="BusinessObjects.Store" />
+        <EntityContainerMapping CdmEntityContainer="BusinessObjectsContainer" StorageEntityContainer="BusinessObjectsTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

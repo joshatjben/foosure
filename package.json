@@ -1,0 +1,19 @@
+{
+  "name": "FooSure",
+  "version": "0.0.1",
+  "description": "Foosball season manager",
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "~1.2.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joshatjben/foosure.git"
+  },
+  "author": "Josh Bennett",
+  "license": "MIT"
+}
